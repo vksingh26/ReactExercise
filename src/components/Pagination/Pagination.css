@@ -1,0 +1,15 @@
+.Pagination {
+    text-align: right;
+    color: #ff6600;
+    padding: 0 24px;
+    font-size: 22px;
+    font-weight: bolder;
+    margin: 20px 0;
+}
+
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+  }
