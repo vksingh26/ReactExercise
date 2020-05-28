@@ -4,50 +4,71 @@ import Feeds from "../../components/NewsFeed/Feeds/Feeds";
 import "../NewsFeed/Feeds/Feeds.css";
 import getFeeds from "../../getFeeds";
 import Pagination from "../Pagination/Pagination";
-import FeedGraph from '../Graph/Graph';
+import FeedGraph from "../Graph/Graph";
 
-const NewsFeed = (props) => {
+function NewsFeed() {
+  const initialState = () => JSON.parse(sessionStorage.getItem("feeds")) || [];
   const [isLoaded, setIsLoaded] = useState(false);
-  const [feeds, setFeeds] = useState([]);
+  const [feeds, setFeeds] = useState(initialState);
   const [error, setError] = useState(null);
-  const [currentPage,setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
+    //here i set the max page count to  10;
     if (currentPage >= 0 && currentPage <= 10) {
-      getFeeds(currentPage).then(
-        (result) => {
-          setIsLoaded(true);
-          setFeeds(result.hits);
-        },
-        (error) => {
-          setError(error);
-        }
-      );
+      if (JSON.parse(sessionStorage.getItem("feeds"))) {
+        setIsLoaded(true);
+        setFeeds(JSON.parse(sessionStorage.getItem("feeds")));
+      } else {
+        getFeeds(currentPage).then(
+          (result) => {
+            setIsLoaded(true);
+            setFeeds(result.hits);
+          },
+          (error) => {
+            setError(error);
+          }
+        );
+      }
     }
   }, [currentPage]);
 
   const upvoteHandler = (id) => {
     const index = feeds.findIndex((feed) => {
-      console.log(feed);
       return feed.objectID === id;
     });
     const feed = Object.assign({}, feeds[index]);
     feed.points = feed.points + 1;
     feeds[index] = feed;
-    setFeeds([...feeds]);
+    sessionStorage.clear();
+    sessionStorage.setItem("feeds", JSON.stringify(feeds));
+    setFeeds(JSON.parse(sessionStorage.getItem("feeds")));
   };
 
   const hideHandler = (obj) => {
     let objectID = obj.objectID;
-    setFeeds(feeds.filter((feed) => feed.objectID !== objectID));
+    var newFeeds = feeds.filter((feed) => feed.objectID !== objectID);
+    sessionStorage.clear();
+    sessionStorage.setItem("feeds", JSON.stringify(newFeeds));
+    setFeeds(JSON.parse(sessionStorage.getItem("feeds")));
   };
 
   const prevFeedHandler = () => {
-    setCurrentPage((currentPage) => currentPage - 1);
+    if (JSON.parse(sessionStorage.getItem("feeds"))) {
+      sessionStorage.clear();
+      setCurrentPage((currentPage) => currentPage - 1);
+    } else {
+      setCurrentPage((currentPage) => currentPage - 1);
+    }
   };
 
   const nextFeedHandler = () => {
-    setCurrentPage((currentPage) => currentPage + 1);
+    if (JSON.parse(sessionStorage.getItem("feeds"))) {
+      sessionStorage.clear();
+      setCurrentPage((currentPage) => currentPage + 1);
+    } else {
+      setCurrentPage((currentPage) => currentPage + 1);
+    }
   };
 
   if (error) {
@@ -72,10 +93,10 @@ const NewsFeed = (props) => {
           prevFeed={prevFeedHandler}
           nextFeed={nextFeedHandler}
         />
-        <FeedGraph feeds={feeds}/>
+        <FeedGraph feeds={feeds} />
       </div>
     );
   }
-};
+}
 
 export default NewsFeed;
