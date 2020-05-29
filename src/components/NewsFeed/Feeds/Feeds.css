@@ -5,42 +5,146 @@
 }
 
 .FeedUl li {
-    padding: 10px 0;
+    padding: 10px 15px;
     display: flex;
 }
 
 .FeedUl li:nth-child(even) {
     background: lightgray;
 }
-
-label {
-    display: inline-block;
-    text-align: center;
-    position: relative;
-    min-width: 110px;
+.FeedContainer {
+    display: flex;
+    align-items: normal;
+    flex-direction: column-reverse;
+    margin: 0;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #999999;
 }
 
-.FeedUl .upvote {
-    width: 0;
-    position: absolute;
-    height: 0;
-    top: 0px;
+.FeedContainer .FeedContentData {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
+    margin-top: 16px;
+}
+
+.FeedContentData .comments {
+    flex: 1;
+}
+
+.FeedContentData .voteCount {
+    flex: 1;
+}
+
+.FeedContentData .upvote {
+    display: flex;
+    justify-content: inherit;
+    align-self: center;
+    flex: 1;
+}
+
+.upvote .upvoteIcon {
     border-style: solid;
     border-width: 0 10px 20px 10px;
     border-color: transparent transparent #999999 transparent;
-    left: 17px;
 }
 
-.FeedComments {
-    text-align: left;
-}
-.FeedComments .title{
-    font-size: 24px;
+.FeedContainer .FeedContentDetails {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-all;
 }
 
-.FeedComments .author{
+.FeedContentDetails .title {
     font-size: 20px;
+    width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.FeedComments .url {
+
+.FeedContentDetails .author {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.FeedContentDetails .url {
+    font-size: 16px;
     color: #999999;
+}
+.FeedContentDetails .hide{
+    font-size: 16px;
+    color: #999999;
+}
+@media only screen and (min-device-width: 768px) 
+and (max-device-width: 1023px) {
+    .FeedContentDetails .title {
+        font-size: 24px;
+        max-width: 100%;
+        width: auto;
+        white-space: unset;
+        overflow: unset;
+        text-overflow: unset;
+        margin-right: 10px;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .FeedContainer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .FeedContainer .FeedContentData {
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0;
+    }
+
+    .FeedContentData .comments {
+        flex: 1;
+    }
+
+    .FeedContentData .voteCount {
+        flex: 1;
+    }
+
+    .FeedContentData .upvote {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .upvote .upvoteIcon {
+        border-style: solid;
+        border-width: 0 10px 20px 10px;
+        border-color: transparent transparent #999999 transparent;
+    }
+
+    .FeedContainer .FeedContentDetails {
+        display: flex;
+        flex: 4;
+        align-items: center;
+    }
+
+    .FeedContentDetails .title {
+        font-size: 24px;
+        max-width: 100%;
+        width: auto;
+        white-space: unset;
+        overflow: unset;
+        text-overflow: unset;
+    }
+
+    .FeedContentDetails .author {
+        font-size: 20px;
+        margin: 0 10px 0 0;
+    }
+
+    .FeedContentDetails .url {
+        color: #999999;
+        margin: 0 10px;
+        font-size: 20px;
+    }
 }

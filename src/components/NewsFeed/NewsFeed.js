@@ -7,7 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import FeedGraph from "../Graph/Graph";
 
 function NewsFeed() {
-  const initialState = () => JSON.parse(sessionStorage.getItem("feeds")) || [];
+  const initialState = () => JSON.parse(localStorage.getItem("feeds")) || [];
   const [isLoaded, setIsLoaded] = useState(false);
   const [feeds, setFeeds] = useState(initialState);
   const [error, setError] = useState(null);
@@ -16,9 +16,9 @@ function NewsFeed() {
   useEffect(() => {
     //here i set the max page count to  10;
     if (currentPage >= 0 && currentPage <= 10) {
-      if (JSON.parse(sessionStorage.getItem("feeds"))) {
+      if (JSON.parse(localStorage.getItem("feeds"))) {
         setIsLoaded(true);
-        setFeeds(JSON.parse(sessionStorage.getItem("feeds")));
+        setFeeds(JSON.parse(localStorage.getItem("feeds")));
       } else {
         getFeeds(currentPage).then(
           (result) => {
@@ -33,6 +33,14 @@ function NewsFeed() {
     }
   }, [currentPage]);
 
+  const maintainlocalStorage = (feeds) => {
+    debugger;
+    localStorage.clear();
+    localStorage.setItem("feeds", JSON.stringify(feeds));
+    setFeeds(JSON.parse(localStorage.getItem("feeds")));
+  }
+
+
   const upvoteHandler = (id) => {
     const index = feeds.findIndex((feed) => {
       return feed.objectID === id;
@@ -40,22 +48,18 @@ function NewsFeed() {
     const feed = Object.assign({}, feeds[index]);
     feed.points = feed.points + 1;
     feeds[index] = feed;
-    sessionStorage.clear();
-    sessionStorage.setItem("feeds", JSON.stringify(feeds));
-    setFeeds(JSON.parse(sessionStorage.getItem("feeds")));
+    maintainlocalStorage(feeds);
   };
 
   const hideHandler = (obj) => {
     let objectID = obj.objectID;
     var newFeeds = feeds.filter((feed) => feed.objectID !== objectID);
-    sessionStorage.clear();
-    sessionStorage.setItem("feeds", JSON.stringify(newFeeds));
-    setFeeds(JSON.parse(sessionStorage.getItem("feeds")));
+    maintainlocalStorage(newFeeds);
   };
 
   const prevFeedHandler = () => {
-    if (JSON.parse(sessionStorage.getItem("feeds"))) {
-      sessionStorage.clear();
+    if (JSON.parse(localStorage.getItem("feeds"))) {
+      localStorage.clear();
       setCurrentPage((currentPage) => currentPage - 1);
     } else {
       setCurrentPage((currentPage) => currentPage - 1);
@@ -63,8 +67,8 @@ function NewsFeed() {
   };
 
   const nextFeedHandler = () => {
-    if (JSON.parse(sessionStorage.getItem("feeds"))) {
-      sessionStorage.clear();
+    if (JSON.parse(localStorage.getItem("feeds"))) {
+      localStorage.clear();
       setCurrentPage((currentPage) => currentPage + 1);
     } else {
       setCurrentPage((currentPage) => currentPage + 1);

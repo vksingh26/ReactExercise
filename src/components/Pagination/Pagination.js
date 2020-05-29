@@ -6,11 +6,11 @@ class Pagination extends Component {
   render() {
     return (
       <div className="Pagination">
-        <a className={this.props.currentPage <= 0 ? 'MARGIN_LEFT MARGIN_RIGHT isDisabled': 'cursor-pointer MARGIN_LEFT MARGIN_RIGHT'} onClick={this.props.prevFeed}>
+        <span className={this.props.currentPage <= 0 ? 'MARGIN_LEFT MARGIN_RIGHT isDisabled': 'cursor-pointer MARGIN_LEFT MARGIN_RIGHT'} onClick={this.props.prevFeed}>
           Previous
-        </a>
+        </span>
         <span>|</span>
-        <a className={this.props.currentPage >= 10 ? 'MARGIN_LEFT MARGIN_RIGHT isDisabled': 'cursor-pointer MARGIN_LEFT MARGIN_RIGHT'} onClick={this.props.nextFeed}>Next</a>
+        <span className={this.props.currentPage >= 10 ? 'MARGIN_LEFT MARGIN_RIGHT isDisabled': 'cursor-pointer MARGIN_LEFT MARGIN_RIGHT'} onClick={this.props.nextFeed}>Next</span>
       </div>
     );
   }

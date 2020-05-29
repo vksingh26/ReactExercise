@@ -1,8 +1,8 @@
 .NavigationItem {
-    margin: 10px 0;
+    margin: 10px 10px;
     box-sizing: border-box;
     display: block;
-    width: 100%;
+    width: auto;
 }
 
 .NavigationItem a {
@@ -11,6 +11,7 @@
     width: 100%;
     box-sizing: border-box;
     display: block;
+    line-height: 18px;
 }
 
 .NavigationItem a:hover,
@@ -19,7 +20,7 @@
     color: #FFF;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
     .NavigationItem {
         margin: 0;
         display: flex;
@@ -32,7 +33,7 @@
         color: #fff;
         text-decoration: none;
         height: 100%;
-        padding: 20px 10px;
+        padding: 10px;
     }
     
     .NavigationItem a:hover,

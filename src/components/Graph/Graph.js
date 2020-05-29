@@ -3,9 +3,6 @@ import { Line } from "react-chartjs-2";
 
 import './Graph.css';
 class FeedGraph extends Component {
-    constructor(props){
-        super(props);
-    }
   render() {
     let getVotes = [];
     let getId = [];
